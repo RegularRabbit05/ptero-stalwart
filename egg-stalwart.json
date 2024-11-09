@@ -1,0 +1,132 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-11-09T15:54:34+01:00",
+    "name": "Stalwart",
+    "author": "contact@regdev.me",
+    "description": null,
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/regularrabbit05\/ptero-socat:1.0": "ghcr.io\/regularrabbit05\/ptero-socat:1.0"
+    },
+    "file_denylist": [],
+    "startup": "\/bin\/bash \/home\/container\/config.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": [\r\n        \"server.startup\"\r\n    ]\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "install_packages curl ca-certificates socat\r\ncurl --proto '=https' --tlsv1.2 -sSf https:\/\/get.stalw.art\/install.sh -o \/install.sh\r\nchmod +x \/install.sh\r\n\r\necho \"#!\/bin\/bash\" > \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$HTTP_PORT,fork TCP:127.0.0.1:80 &\" >> \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$HTTPS_PORT,fork TCP:127.0.0.1:443 &\" >> \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$IMAP_143,fork TCP:127.0.0.1:143 &\" >> \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$IMAP_993,fork TCP:127.0.0.1:993 &\" >> \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$POP3_110,fork TCP:127.0.0.1:110 &\" >> \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$POP3_995,fork TCP:127.0.0.1:995 &\" >> \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$TCP_4190,fork TCP:127.0.0.1:4190 &\" >> \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$SMTP_25,fork TCP:127.0.0.1:25 &\" >> \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$SMTP_578,fork TCP:127.0.0.1:587 &\" >> \/mnt\/server\/config.sh\r\necho \"socat TCP-LISTEN:$SMTP_465,fork TCP:127.0.0.1:465 &\" >> \/mnt\/server\/config.sh\r\necho \"echo Starting Stalwart\" >> \/mnt\/server\/config.sh\r\necho \"\/home\/container\/bin\/stalwart-mail --config=\/home\/container\/etc\/config.toml\" >> \/mnt\/server\/config.sh\r\necho \"echo Goodbye!\" >> \/mnt\/server\/config.sh\r\nchmod +x \/mnt\/server\/config.sh\r\n\r\n\/install.sh \/mnt\/server\r\nsed -i 's\/bind = \"\\[::\\]:8080\"\/bind = \"\\[::\\]:80\"\/' \/mnt\/server\/etc\/config.toml\r\nsed -i 's|path = \"\/mnt\/server\/data\"|path = \"\/home\/container\/data\"|' \/mnt\/server\/etc\/config.toml\r\nsed -i 's|path = \"\/mnt\/server\/logs\"|path = \"\/home\/container\/logs\"|' \/mnt\/server\/etc\/config.toml\r\nsed -i 's|type = \"log\"|type = \"console\"|' \/mnt\/server\/etc\/config.toml",
+            "container": "bitnami\/minideb:latest",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "HTTP",
+            "description": "",
+            "env_variable": "HTTP_PORT",
+            "default_value": "2000",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        },
+        {
+            "name": "HTTPS",
+            "description": "",
+            "env_variable": "HTTPS_PORT",
+            "default_value": "2001",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        },
+        {
+            "name": "IMAP_143",
+            "description": "",
+            "env_variable": "IMAP_143",
+            "default_value": "2002",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        },
+        {
+            "name": "IMAP_993",
+            "description": "",
+            "env_variable": "IMAP_993",
+            "default_value": "2003",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        },
+        {
+            "name": "POP3_110",
+            "description": "",
+            "env_variable": "POP3_110",
+            "default_value": "2004",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        },
+        {
+            "name": "POP3_995",
+            "description": "",
+            "env_variable": "POP3_995",
+            "default_value": "2005",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        },
+        {
+            "name": "TCP_4190",
+            "description": "",
+            "env_variable": "TCP_4190",
+            "default_value": "2006",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        },
+        {
+            "name": "SMTP_25",
+            "description": "",
+            "env_variable": "SMTP_25",
+            "default_value": "2007",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        },
+        {
+            "name": "SMTP_587",
+            "description": "",
+            "env_variable": "SMTP_578",
+            "default_value": "2008",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        },
+        {
+            "name": "SMTP_465",
+            "description": "",
+            "env_variable": "SMTP_465",
+            "default_value": "2009",
+            "user_viewable": false,
+            "user_editable": true,
+            "rules": "required|integer|min:1025",
+            "field_type": "text"
+        }
+    ]
+}
